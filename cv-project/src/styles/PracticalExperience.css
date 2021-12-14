@@ -1,0 +1,45 @@
+.practicalExperience {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+.practicalExperience .addWork {
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: dotted;
+    cursor: pointer;
+}
+
+.practicalExperience label {
+    display: inline-block;
+    width: 150px;
+}
+
+.practicalExperience input {
+    border-radius: 5px;
+    border-width: 1px;
+}
+
+.display {
+    display: inline-block;
+    width: 200px;
+}
+
+.practicalExperience ul {
+    padding: 0;
+}
+
+.practicalExperience ul li {
+    list-style-type: none;
+    margin-bottom: 20px;
+}
+
+.work {
+    padding: 20px;
+    background-color:  white;
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}

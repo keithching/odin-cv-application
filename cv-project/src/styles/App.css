@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#root {
+    flex: 1;
+    display: flex;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+}
+
+.left {
+    flex: 1;
+    padding: 20px;
+    background-color: rgba(211, 211, 211, 0.2);
+}
+
+.right {
+    flex: 1;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+}
+
+.container {
+    flex: 1;
+    margin: 50px;
+    padding: 50px;
+    background-color: white;
+}
+
+.footer {
+    flex: 0;
+    text-align: center;
+    color: black;
+    margin: 10px 0;
+}
+
+.footer a {
+    text-decoration: none;
+    color: grey;
+}

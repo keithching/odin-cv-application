@@ -1,0 +1,24 @@
+.generalInfo_name,
+.generalInfo_email,
+.generalInfo_phone {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+}
+
+input {
+    flex: 1;
+    border-radius: 5px;
+    border-width: 1px;
+}
+
+.display {
+    display: inline-block;
+    width: 200px;
+}
+

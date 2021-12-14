@@ -1,0 +1,46 @@
+.CV_name {
+    font-size: 30px;
+}
+
+.CV_email_phone,
+.CV_work .mainTasks,
+.CV_education .titleOfStudy {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.CV_practicalExperience_title,
+.CV_educationalExperience_title {
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+
+.CV_works ul,
+.CV_educations ul {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.CV_works ul li,
+.CV_educations ul li {
+    list-style-type: none;
+}
+
+.CV_work,
+.CV_education {
+    display: flex;
+    flex-direction: column;
+}
+
+.CV_work .row,
+.CV_education .row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.CV_work .positionTitle_companyName,
+.CV_education .schoolName {
+    font-weight: bold;
+}

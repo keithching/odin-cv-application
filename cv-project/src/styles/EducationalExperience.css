@@ -1,0 +1,45 @@
+.educationalExperience {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+.educationalExperience .addEducation {
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: dotted;
+    cursor: pointer;
+}
+
+.educationalExperience label {
+    display: inline-block;
+    width: 150px;
+}
+
+.educationalExperience input {
+    border-radius: 5px;
+    border-width: 1px;
+}
+
+.display {
+    display: inline-block;
+    width: 200px;
+}
+
+.educationalExperience ul {
+    padding: 0;
+}
+
+.educationalExperience ul li {
+    list-style-type: none;
+    margin-bottom: 20px;
+}
+
+.education {
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}

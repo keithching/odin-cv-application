@@ -1,0 +1,6 @@
+.editButton,
+.deleteButton { 
+    border-style: none;
+    background-color: transparent;
+    cursor: pointer;
+}
