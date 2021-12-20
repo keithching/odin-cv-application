@@ -1,33 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { EditButton, DeleteButton } from './Common';
 import '../styles/PracticalExperience.css';
 
-class PracticalExperience extends Component {
+const PracticalExperience = (props) => {
 
-    render() {
+    const { works, addWork, handleChange, editEntry, deleteEntry } = props;
 
-        const { works, addWork, handleChange, editEntry, deleteEntry } = this.props;
+    const id = 'work';
 
-        const id = 'work';
+    return (
+        <div className="practicalExperience">
+            <ul>
+                {works.map(work => {
+                    return (
+                        <li key={work.id} className="work">
+                            <Work work={work} handleChange={handleChange} />
+                            <EditButton mode={work.mode} id={id} editEntry={editEntry} specificID={work.id} />
+                            <DeleteButton id={id} deleteEntry={deleteEntry} specificID={work.id} />
+                        </li>
+                    );
+                })}
+            </ul>
+            <button className="addWork" onClick={addWork}>Add Work</button>
+        </div>
+    );
 
-        return (
-            <div className="practicalExperience">
-                <ul>
-                    {works.map(work => {
-                        return (
-                            <li key={work.id} className="work">
-                                <Work work={work} handleChange={handleChange} />
-                                <EditButton mode={work.mode} id={id} editEntry={editEntry} specificID={work.id} />
-                                <DeleteButton id={id} deleteEntry={deleteEntry} specificID={work.id} />
-                            </li>
-                        );
-                    })}
-                </ul>
-                <button className="addWork" onClick={addWork}>Add Work</button>
-            </div>
-        );
-    }
-}
+};
 
 const Work = (props) => {
 

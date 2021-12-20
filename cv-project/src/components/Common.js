@@ -1,35 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../styles/Common.css';
 
-class EditButton extends Component  {
+const EditButton = (props) => {
 
-    render() {
+    const { mode, id, editEntry, specificID } = props;
 
-        const { mode, id, editEntry, specificID } = this.props;
+    return (
+        <button className="editButton" onClick={(e) => editEntry(id, e, specificID)}>
+            {mode === 'read' ? <i id="edit" className="fas fa-edit"></i> : <i id="update" className="far fa-check-square"></i>}
+        </button>
+    );
 
-        return (
-            <button className="editButton" onClick={(e) => editEntry(id, e, specificID)}>
-                {mode === 'read' ? <i id="edit" className="fas fa-edit"></i> : <i id="update" className="far fa-check-square"></i>}
-            </button>
-        );
-    }
+};
 
-}
+const DeleteButton = (props) => {
 
-class DeleteButton extends Component {
+    const { id, deleteEntry, specificID } = props;
 
-    render() {
+    return (
+        <button className="deleteButton" onClick={(e) => deleteEntry(id, e, specificID)}>
+            <i className="fas fa-trash-alt"></i>
+        </button>
+    );
 
-        const { id, deleteEntry, specificID } = this.props;
-
-        return (
-            <button className="deleteButton" onClick={(e) => deleteEntry(id, e, specificID)}>
-                <i className="fas fa-trash-alt"></i>
-            </button>
-        );
-
-    }
-}
+};
 
 
 export {

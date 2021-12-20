@@ -1,33 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { EditButton, DeleteButton } from './Common';
 import '../styles/EducationalExperience.css';
 
-class EducationalExperience extends Component {
 
-    render() {
-        
-        const { educations, addEducation, handleChange, editEntry, deleteEntry } = this.props;
+const EducationalExperience = (props) => {
 
-        const id = 'education';
+    const { educations, addEducation, handleChange, editEntry, deleteEntry } = props;
 
-        return (
-            <div className="educationalExperience">
-                <ul>
-                    {educations.map(education => {
-                        return (
-                            <li key={education.id} className="education">
-                                <Education education={education} handleChange={handleChange} />
-                                <EditButton mode={education.mode} id={id} editEntry={editEntry} specificID={education.id} />
-                                <DeleteButton id={id} deleteEntry={deleteEntry} specificID={education.id} />
-                            </li>
-                        );
-                    })}
-                </ul>
-                <button className="addEducation" onClick={addEducation}>Add Education</button>
-            </div>
-        );
-    }
-}
+    const id = 'education';
+
+    return (
+        <div className="educationalExperience">
+            <ul>
+                {educations.map(education => {
+                    return (
+                        <li key={education.id} className="education">
+                            <Education education={education} handleChange={handleChange} />
+                            <EditButton mode={education.mode} id={id} editEntry={editEntry} specificID={education.id} />
+                            <DeleteButton id={id} deleteEntry={deleteEntry} specificID={education.id} />
+                        </li>
+                    );
+                })}
+            </ul>
+            <button className="addEducation" onClick={addEducation}>Add Education</button>
+        </div>
+    );
+};
 
 const Education = (props) => {
 

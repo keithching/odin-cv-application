@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Name, Email, Phone } from './components/GeneralInfo';
 import EducationalExperience from './components/EducationalExperience';
 import PracticalExperience from './components/PracticalExperience';
@@ -6,124 +6,90 @@ import CV from './components/CV';
 import uniqid from 'uniqid';
 import './styles/App.css';
 
-class App extends Component {
 
-  constructor(props) {
-    super(props);
+const App = () => {
 
-    this.state = {
+  const [ name, setName ] = useState({
+    text: 'Name',
+    mode: 'read'
+  });
 
-      // edit as individual
-      name: {
-        text: 'Name',
-        mode: 'read'
-      },
-      email: {
-        text: 'Email',
-        mode: 'read'
-      },
-      phone: {
-        text: 'Phone',
-        mode: 'read'
-      },
+  const [ email, setEmail] = useState({
+    text: 'Email', 
+    mode: 'read'
+  });
 
-      // edit as a group
-      education: {
-        mode: 'read',
-        id: uniqid(),
-        schoolName: 'School Name',
-        titleOfStudy: 'Title of Study',
-        dateOfStudy: 'Date of Study'
-      },
+  const [ phone, setPhone ] = useState({
+    text: 'Phone', 
+    mode: 'read'  
+  });
 
-      educations: [],
+  const [ education, setEducation ] = useState({
+    mode: 'read',
+    id: uniqid(),
+    schoolName: 'School Name',
+    titleOfStudy: 'Title of Study',
+    dateOfStudy: 'Date of Study'
+  });
 
-      // edit as a group
-      work: {
-        mode: 'read',
-        id: uniqid(),
-        companyName: 'Company Name',
-        positionTitle: 'Position Title',
-        mainTasks: 'Main Tasks',
-        dateFromAndUntil: 'Date from and until'
-      },
+  const [ educations, setEducations ] = useState([]);
 
-      works: [],
+  const [ work, setWork ] = useState({
+    mode: 'read',
+    id: uniqid(),
+    companyName: 'Company Name',
+    positionTitle: 'Position Title',
+    mainTasks: 'Main Tasks',
+    dateFromAndUntil: 'Date from and until'
+  });
+
+  const [ works, setWorks ] = useState([]);
 
 
-    }
-
-    this.handleChange = this.handleChange.bind(this);
-    this.editEntry = this.editEntry.bind(this);
-    this.deleteEntry = this.deleteEntry.bind(this);
-    this.addEducation = this.addEducation.bind(this);
-    this.addWork = this.addWork.bind(this);
-  }
-
-
-  handleChange = (id, e, specificID) => {
+  const handleChange = (id, e, specificID) => {
 
     if (id === 'name') {
-      this.setState((state) => {
-        return {
-            name: {
-              text: e.target.value,
-              mode: state.name.mode
-            }
-        }
+      setName({
+        text: e.target.value,
+        mode: name.mode
       });
-    }
-    else if (id === 'email') {
-      this.setState((state) => {
-        return {
-            email: {
-              text: e.target.value,
-              mode: state.email.mode 
-            }
-        }
+    } else if (id === 'email') {
+      setEmail({
+          text: e.target.value,
+          mode: email.mode 
       });
-    }
-    else if (id === 'phone') {
-      this.setState((state) => {
-        return {
-            phone: {
-              text: e.target.value,
-              mode: state.phone.mode 
-            }
-        }
-      });
+    } else if (id === 'phone') {
+        setPhone({
+          text: e.target.value,
+          mode: phone.mode 
+        });
     } else if (id === 'education') {
 
-      this.setState((state) => {
+      setEducations((prevEducations) => {
+        const matchingEducation = prevEducations.find(prevEducation => prevEducation.id === specificID);
+        const updatedEducations = [...prevEducations];
 
-        const matchingEducation = state.educations.find(education => education.id === specificID);
-
-        const updatedEducations = state.educations;
-
-        updatedEducations.forEach(education => {
-          if (education === matchingEducation) {
+        for (let i = 0; i < updatedEducations.length; i++) {
+          if (updatedEducations[i] === matchingEducation) {
             if (e.target.id === 'schoolNameInput') {
-              education.schoolName = document.getElementById('schoolNameInput').value;
+              updatedEducations[i].schoolName = document.getElementById('schoolNameInput').value;
             } else if (e.target.id === 'titleOfStudyInput') {
-              education.titleOfStudy = document.getElementById('titleOfStudyInput').value;
+              updatedEducations[i].titleOfStudy = document.getElementById('titleOfStudyInput').value;
             } else if (e.target.id === 'dateOfStudyInput') {
-              education.dateOfStudy = document.getElementById('dateOfStudyInput').value;
+              updatedEducations[i].dateOfStudy = document.getElementById('dateOfStudyInput').value;
             }
           }
-        });
-
-        return {
-          educations: updatedEducations
         }
-
+        
+        return updatedEducations;
       });
+
+
     } else if (id === 'work') {
 
-      this.setState((state) => {
-
-        const matchingWork = state.works.find(work => work.id === specificID);
-
-        const updatedWorks = state.works;
+      setWorks((prevWorks) => {
+        const matchingWork = prevWorks.find(work => work.id === specificID);
+        const updatedWorks = [...prevWorks];
 
         updatedWorks.forEach(work => {
           if (work === matchingWork) {
@@ -139,121 +105,87 @@ class App extends Component {
           }
         });
 
-        return {
-          works: updatedWorks
-        }
-
+        return updatedWorks;
       });
     }
-
   };
 
   
-  editEntry = (id, e, specificID) => {
+  const editEntry = (id, e, specificID) => {
 
     if (id === 'name') {
 
-      this.setState((state) => {
-        if (state.name.mode === 'read') {
-  
+      setName((prevName) => {
+        if (prevName.mode === 'read') {
           return {
-              name: {
-                text: state.name.text,
-                mode: 'edit'
-              }
-            };
-  
-        } else if (state.name.mode === 'edit') {
-  
-          return {
-              name: {
-                text: state.name.text,
-                mode: 'read'
-              }
+            text: prevName.text,
+            mode: 'edit'
           };
-  
+        } else if (prevName.mode === 'edit') {
+          return {
+            text: prevName.text,
+            mode: 'read'
+          }
         }
       });
       
     } else if (id === 'email') {
 
-      this.setState((state) => {
-        if (state.email.mode === 'read') {
-  
+      setEmail((prevEmail) => {
+        if (prevEmail.mode === 'read') {
           return {
-              email: {
-                text: state.email.text,
-                mode: 'edit'
-              }
+            text: prevEmail.text,
+            mode: 'edit'
           };
-  
-        } else if (state.email.mode === 'edit') {
-  
+        } else if (prevEmail.mode === 'edit') {
           return {
-              email: {
-                text: state.email.text,
-                mode: 'read'
-              }
+            text: prevEmail.text,
+            mode: 'read'
           };
-  
         }
       });
+
     } else if (id === 'phone') {
 
-      this.setState((state) => {
-        if (state.phone.mode === 'read') {
-  
+      setPhone((prevPhone) => {
+        if (prevPhone.mode === 'read') {
           return {
-              phone: {
-                text: state.phone.text,
-                mode: 'edit'
-              }
+            text: prevPhone.text,
+            mode: 'edit'
           };
-  
-        } else if (state.phone.mode === 'edit') {
-  
+        } else if (prevPhone.mode === 'edit') {
           return {
-              phone: {
-                text: state.phone.text,
-                mode: 'read'
-              }
+            text: prevPhone.text,
+            mode: 'read'
           };
-  
         }
       });
 
     } else if (id === 'education') {
 
-      this.setState((state) => {
+      setEducations((prevEducations) => {
+        const matchingEducation = prevEducations.find(prevEducation => prevEducation.id === specificID);
+        const updatedEducations = [...prevEducations]; // spread the existing array into a new array
+        // https://stackoverflow.com/questions/56266575/why-is-usestate-not-triggering-re-render
 
-        const matchingEducation = state.educations.find(education => education.id === specificID);
-  
-        const updatedEducations = state.educations;
-
-        updatedEducations.forEach(education => {
-          if (education === matchingEducation) {
+        for (let i = 0; i < updatedEducations.length; i++) {
+          if (updatedEducations[i] === matchingEducation) {
             if (e.target.id === 'edit') {
-              education.mode = 'edit';
+              updatedEducations[i].mode = 'edit';
             } else if (e.target.id === 'update') {
-              education.mode = 'read';
+              updatedEducations[i].mode = 'read';
             }
-
           }
-        });
-        
-        return {
-          educations: updatedEducations
-        };
+        }
 
+        return updatedEducations;
       });
 
     } else if (id === 'work') {
 
-      this.setState((state) => {
-
-        const matchingWork = state.works.find(work => work.id === specificID);
-  
-        const updatedWorks = state.works;
+      setWorks((prevWorks) => {
+        const matchingWork = prevWorks.find(work => work.id === specificID);
+        const updatedWorks = [...prevWorks];
 
         updatedWorks.forEach(work => {
           if (work === matchingWork) {
@@ -262,37 +194,27 @@ class App extends Component {
             } else if (e.target.id === 'update') {
               work.mode = 'read';
             }
-
           }
         });
         
-        return {
-          works: updatedWorks
-        };
-
+        return updatedWorks;
       });
 
     }
-
   };
 
-
-  deleteEntry = (id, e, specificID) => {
+  const deleteEntry = (id, e, specificID) => {
 
     if (id === 'education') {
       
-      this.setState((state) => {
-        return {
-          educations: state.educations.filter(education => education.id !== specificID)
-        };
+      setEducations(() => {
+        return educations.filter(education => education.id !== specificID);
       });
 
     } else if (id === 'work') {
       
-      this.setState((state) => {
-        return {
-          works: state.works.filter(work => work.id !== specificID)
-        };
+      setWorks(() => {
+        return works.filter(work => work.id !== specificID);
       });
 
     }
@@ -300,43 +222,38 @@ class App extends Component {
   };
 
 
+  const addEducation = () => {
 
+    setEducations(educations.concat(education));
 
-  addEducation = () => {
-    this.setState({
-      educations: this.state.educations.concat(this.state.education),
-      education: {
-        mode: 'read',
-        id: uniqid(),
-        schoolName: 'School Name',
-        titleOfStudy: 'Title of Study',
-        dateOfStudy: 'Date of Study'
-      }
-    })
+    setEducation({
+      mode: 'read',
+      id: uniqid(),
+      schoolName: 'School Name',
+      titleOfStudy: 'Title of Study',
+      dateOfStudy: 'Date of Study'
+    });
+
   };
 
 
-  addWork = () => {
-    this.setState({
-      works: this.state.works.concat(this.state.work),
-      work: {
-        mode: 'read',
-        id: uniqid(),
-        companyName: 'Company Name',
-        positionTitle: 'Position Title',
-        mainTasks: 'Main Tasks',
-        dateFromAndUntil: 'Date from and until'
-      }
-    })
+  const addWork = () => {
+
+    setWorks(works.concat(work));
+
+    setWork({
+      mode: 'read',
+      id: uniqid(),
+      companyName: 'Company Name',
+      positionTitle: 'Position Title',
+      mainTasks: 'Main Tasks',
+      dateFromAndUntil: 'Date from and until'
+    });
+
   };
 
 
-
-  render() {
-
-    const { name, email, phone, education, educations, work, works} = this.state;
-
-    return (
+  return (
       <div className="main">
         <div className="left">
           <h2>General Information</h2>
@@ -344,24 +261,24 @@ class App extends Component {
             <Name 
               mode={name.mode} 
               name={name.text} 
-              handleChange={this.handleChange}
-              editEntry={this.editEntry}
+              handleChange={handleChange}
+              editEntry={editEntry}
             />
           </div>
           <div>
             <Email 
               mode={email.mode} 
               email={email.text} 
-              handleChange={this.handleChange}
-              editEntry={this.editEntry}
+              handleChange={handleChange}
+              editEntry={editEntry}
             />
           </div>
           <div>
             <Phone
               mode={phone.mode} 
               phone={phone.text} 
-              handleChange={this.handleChange}
-              editEntry={this.editEntry}
+              handleChange={handleChange}
+              editEntry={editEntry}
             />
           </div>
 
@@ -369,10 +286,10 @@ class App extends Component {
           <div>
             <EducationalExperience
               educations={educations}
-              addEducation={this.addEducation}
-              handleChange={this.handleChange}
-              editEntry={this.editEntry}
-              deleteEntry={this.deleteEntry}
+              addEducation={addEducation}
+              handleChange={handleChange}
+              editEntry={editEntry}
+              deleteEntry={deleteEntry}
             />
           </div>
 
@@ -380,10 +297,10 @@ class App extends Component {
           <div>
             <PracticalExperience
               works={works}
-              addWork={this.addWork}
-              handleChange={this.handleChange}
-              editEntry={this.editEntry}
-              deleteEntry={this.deleteEntry}
+              addWork={addWork}
+              handleChange={handleChange}
+              editEntry={editEntry}
+              deleteEntry={deleteEntry}
             />
           </div>
         </div>
@@ -399,9 +316,11 @@ class App extends Component {
           </div>
         </div>
       </div>
-    );
-  }
+  );
 
-}
+};
+
 
 export default App;
+
+
